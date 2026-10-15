@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "View Portfolio in Edge",
+            "type": "msedge",
+            "request": "launch",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "View Portfolio in Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Start Python Web Server (Port 5173)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "http.server",
+            "args": ["5173"],
+            "console": "integratedTerminal"
+        }
+    ]
+}
