@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- SEO & Social Meta Tags -->
+  <title>Sanskar Nannajkar | Backend Engineer & Systems Baker</title>
+  <meta name="description" content="Portfolio of Sanskar Nannajkar - 3rd-year E&TC student, Backend Engineer, Kafka tinkerer, Go & Java developer, and AI agent builder. Sweet Stack dessert-themed interactive portfolio.">
+  <meta name="keywords" content="Sanskar Nannajkar, Backend Engineer, Java, Spring Boot, Go, Apache Kafka, Distributed Systems, Docker, Kubernetes, AI Agents, Sweet Stack, Portfolio">
+  <meta name="author" content="Sanskar Nannajkar">
+  <meta property="og:title" content="Sanskar Nannajkar | Backend Engineer & Systems Baker 🧁">
+  <meta property="og:description" content="Explore freshly baked distributed systems, Kafka pipelines, and AI agents in this dessert-themed 3D portfolio.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sanskarnannajkar.dev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sanskar Nannajkar | Backend Engineer 🧁">
+  <meta name="twitter:description" content="Explore freshly baked distributed systems, Kafka pipelines, and AI agents.">
+  <meta name="theme-color" content="#FFF6E9">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧁</text></svg>">
+
+  <!-- Google Fonts: Fredoka (headings), DM Sans (body), JetBrains Mono (code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fredoka:wght@300..700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Third-party CDN Dependencies (Pinned, exactly 5) -->
+  <!-- 1. GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- 2. Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <!-- 3. Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <!-- 4. Vanilla-Tilt.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <!-- 5. Three.js is imported as ES Module in scene.js -->
+</head>
+<body data-theme="vanilla">
+
+  <!-- Sweet Preloader -->
+  <div id="preloader" class="preloader" aria-label="Loading Sweet Stack...">
+    <div class="preloader-content">
+      <div class="preloader-donut" id="preloader-donut">
+        <div class="donut-ring">
+          <div class="donut-frosting">
+            <span class="sprinkle s1"></span>
+            <span class="sprinkle s2"></span>
+            <span class="sprinkle s3"></span>
+            <span class="sprinkle s4"></span>
+            <span class="sprinkle s5"></span>
+          </div>
+        </div>
+      </div>
+      <p class="preloader-text">Preheating the oven & frosting 3D desserts...</p>
+      <div class="preloader-bar">
+        <div class="preloader-progress" id="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor Elements (Desktop only) -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true"></div>
+  <div class="custom-cursor-follower" id="custom-cursor-follower" aria-hidden="true"></div>
+
+  <!-- Sprinkle Confetti Canvas for Click Bursts -->
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Scroll Progress Bar with Icing Drip -->
+  <div class="scroll-progress-container" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scroll-progress-bar">
+      <span class="frosting-tip">🧁</span>
+    </div>
+  </div>
+
+  <!-- Fixed Three.js Canvas for 3D Desserts -->
+  <div id="canvas-container" class="canvas-container" aria-hidden="true">
+    <canvas id="webgl-canvas"></canvas>
+    <div class="canvas-hint" id="canvas-hint">
+      <span>💡 Tap any floating dessert to bounce & burst sprinkles!</span>
+    </div>
+  </div>
+
+  <!-- Sticky Glassmorphic Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-brand" aria-label="Sanskar Nannajkar Home">
+        <span class="brand-cupcake">🧁</span>
+        <span class="brand-name">Sanskar<span class="brand-dot">.</span></span>
+        <span class="brand-tag">Bakehouse</span>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-menu" id="nav-menu" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#about" class="nav-link"><span class="nav-link-emoji">📜</span> The Recipe</a></li>
+          <li class="nav-item"><a href="#skills" class="nav-link"><span class="nav-link-emoji">🍬</span> Ingredients</a></li>
+          <li class="nav-item"><a href="#projects" class="nav-link"><span class="nav-link-emoji">🎂</span> Signature Bakes</a></li>
+          <li class="nav-item"><a href="#journey" class="nav-link"><span class="nav-link-emoji">⏳</span> Timeline</a></li>
+          <li class="nav-item"><a href="#beyond" class="nav-link"><span class="nav-link-emoji">🍒</span> Side Dishes</a></li>
+          <li class="nav-item"><a href="#contact" class="nav-link nav-link-cta"><span class="nav-link-emoji">💌</span> Place Order</a></li>
+        </ul>
+      </nav>
+
+      <!-- Theme Mode Toggle & Mobile Menu Trigger -->
+      <div class="nav-actions">
+        <!-- Chocolate Mode Toggle -->
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Chocolate Dark Mode" title="Toggle Chocolate Dark Mode">
+          <span class="toggle-track">
+            <span class="toggle-icon vanilla-icon" title="Vanilla Mode">🍦</span>
+            <span class="toggle-icon chocolate-icon" title="Chocolate Mode">🍫</span>
+            <span class="toggle-thumb"></span>
+          </span>
+        </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-toggle" class="mobile-toggle-btn" aria-label="Toggle mobile menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <div class="mobile-drawer-header">
+        <span class="mobile-brand">Sweet Stack Menu 🍰</span>
+        <button id="mobile-close" class="mobile-close-btn" aria-label="Close mobile menu">✕</button>
+      </div>
+      <ul class="mobile-nav-list">
+        <li><a href="#about" class="mobile-nav-link"><span>📜</span> The Recipe (About)</a></li>
+        <li><a href="#skills" class="mobile-nav-link"><span>🍬</span> The Ingredients (Skills)</a></li>
+        <li><a href="#projects" class="mobile-nav-link"><span>🎂</span> Signature Bakes (Projects)</a></li>
+        <li><a href="#journey" class="mobile-nav-link"><span>⏳</span> Baking Timeline (Milestones)</a></li>
+        <li><a href="#beyond" class="mobile-nav-link"><span>🍒</span> Side Dishes (Interests)</a></li>
+        <li><a href="#contact" class="mobile-nav-link mobile-cta"><span>💌</span> Place an Order (Contact)</a></li>
+      </ul>
+      <div class="mobile-drawer-footer">
+        <p>Freshly baked in Pune, India 🇮🇳</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrap -->
+  <main id="main-content">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-content">
+          <!-- Fresh Out of the Oven Badge -->
+          <div class="hero-badge-wrap">
+            <span class="hero-badge">
+              <span class="badge-dot"></span>
+              Fresh Out of the Oven • 2026 Edition
+            </span>
+          </div>
+
+          <!-- Main Greeting Heading -->
+          <h1 class="hero-title">
+            Hi, I'm <span class="gradient-text">Sanskar Nannajkar</span>
+          </h1>
+
+          <!-- Dynamic Typed Subtitle -->
+          <div class="hero-subtitle-container" aria-label="Specialization">
+            <span class="subtitle-prefix">I am a </span>
+            <span class="typed-text" id="typed-text">Backend Engineer</span>
+            <span class="typed-cursor" aria-hidden="true">|</span>
+          </div>
+
+          <!-- Bio Pitch -->
+          <p class="hero-bio">
+            A 3rd-year E&TC student architecting high-throughput distributed systems, event streams with <strong>Kafka</strong>, resilient <strong>Go & Java</strong> services, and intelligent <strong>AI Agents</strong> — with a sweet pinch of curiosity.
+          </p>
+
+          <!-- Call to Action Buttons -->
+          <div class="hero-cta-group">
+            <a href="#projects" class="btn btn-primary magnetic-btn">
+              <span class="btn-text">View My Bakes</span>
+              <span class="btn-icon">🍩</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary magnetic-btn">
+              <span class="btn-text">Get in Touch</span>
+              <span class="btn-icon">💌</span>
+            </a>
+          </div>
+
+          <!-- Social Links Row with Lucide Icons -->
+          <div class="hero-social-row">
+            <span class="social-label">Find my kitchen on:</span>
+            <div class="social-links" id="hero-social-links">
+              <!-- Rendered dynamically from content object -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Scene Interactive Overlay / Focus Area on Hero -->
+        <div class="hero-3d-showcase" aria-hidden="true">
+          <div class="hero-card-floating glass-card" id="donut-counter-card">
+            <div class="card-mini-header">
+              <span class="mini-icon">🍩</span>
+              <span class="mini-title">Interactive Bakery</span>
+            </div>
+            <p class="card-mini-text">Click the 3D donut 5 times for a sweet surprise!</p>
+            <div class="donut-clicks-meter">
+              <div class="meter-bar" id="donut-meter-bar"></div>
+              <span class="meter-text" id="donut-clicks-text">0 / 5 bites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Scroll Down Indicator -->
+      <a href="#about" class="scroll-down-indicator" aria-label="Scroll down to About section">
+        <span class="scroll-mouse">
+          <span class="scroll-wheel"></span>
+        </span>
+        <span class="scroll-text">Scroll for Recipe</span>
+      </a>
+
+      <!-- Icing Drip Divider (Hero -> About) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C150,90 350,-40 500,60 C650,150 850,-20 1000,70 C1100,120 1180,40 1200,60 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== ABOUT SECTION ("The Recipe") ==================== -->
+    <section id="about" class="section about-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">📜 The Recipe</span>
+          <h2 class="section-title">Behind the Kitchen Counter</h2>
+          <p class="section-subtitle">How a passion for electronics evolved into a recipe for resilient backend architectures.</p>
+        </div>
+
+        <div class="about-grid">
+          <!-- Left: Recipe Card UI -->
+          <div class="recipe-card glass-card" data-tilt data-tilt-max="6" data-tilt-glare data-tilt-max-glare="0.1">
+            <div class="recipe-card-header">
+              <div class="recipe-stamp">CERTIFIED BAKER</div>
+              <h3 class="recipe-name">The Backend Engineer Formula</h3>
+              <p class="recipe-meta">Prep time: 3 Years • Yield: Scalable Distributed Systems</p>
+            </div>
+            <div class="recipe-ingredients-list">
+              <h4>Base Ingredients:</h4>
+              <ul class="recipe-list">
+                <li><span class="ingredient-measure">1 Cup</span> <strong>Core Computing:</strong> Electronics & Telecommunication background giving a deep mechanical sympathy for hardware, signals & memory.</li>
+                <li><span class="ingredient-measure">2 Tbsp</span> <strong>Distributed Architecture:</strong> Event-driven thinking with Kafka, transactional outboxes, and high concurrency.</li>
+                <li><span class="ingredient-measure">A Pinch</span> <strong>DevOps & Cloud:</strong> Docker containers, Kubernetes pods, and automated CI/CD ovens.</li>
+                <li><span class="ingredient-measure">Generous</span> <strong>AI Sprinkles:</strong> Multi-tool autonomous agents, LLM APIs, and RAG pipelines.</li>
+              </ul>
+            </div>
+            <div class="recipe-quote">
+              <p>"Great software, like great baking, is all about the balance of resilient structure and delightful presentation."</p>
+            </div>
+          </div>
+
+          <!-- Right: Bio Description & Highlights -->
+          <div class="about-bio-card">
+            <h3 class="about-bio-title">Third-Year E&TC Student, 24/7 Systems Tinkerer</h3>
+            <p class="about-bio-text">
+              I am currently pursuing my Bachelor of Engineering in <strong>Electronics & Telecommunication</strong>. While my degree taught me the low-level physics of silicon and signals, my true passion ignited in the invisible engine room of software: <strong>backend engineering</strong>.
+            </p>
+            <p class="about-bio-text">
+              I love unraveling complex distributed systems puzzles — whether that means handling peak traffic queues with <strong>Apache Kafka</strong>, optimizing microservice latency in <strong>Go and Java</strong>, containerizing clusters with <strong>Docker and Kubernetes</strong>, or exploring autonomous <strong>AI agent frameworks</strong>.
+            </p>
+
+            <!-- Highlights Checklist -->
+            <div class="about-highlights">
+              <div class="highlight-item">
+                <i data-lucide="check-circle-2" class="highlight-icon"></i>
+                <span>Focus on event-driven architectures & fault tolerance</span>
+              </div>
+              <div class="highlight-item">
+                <i data-lucide="check-circle-2" class="highlight-icon"></i>
+                <span>Hands-on with container orchestration & microservices</span>
+              </div>
+              <div class="highlight-item">
+                <i data-lucide="check-circle-2" class="highlight-icon"></i>
+                <span>Enthusiastic explorer of LLM tool-calling & agentic workflows</span>
+              </div>
+            </div>
+
+            <!-- Quick Action -->
+            <div class="about-actions">
+              <a href="#contact" class="btn btn-outline magnetic-btn">
+                <span>Grab a Coffee & Chat</span>
+                <i data-lucide="coffee" class="btn-icon"></i>
+              </a>
+              <a href="#projects" class="btn btn-ghost">
+                <span>Explore Signature Projects →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated Stats Counter Row -->
+        <div class="stats-row" id="stats-counter-row">
+          <div class="stat-card glass-card">
+            <span class="stat-icon">🎂</span>
+            <div class="stat-number-wrap">
+              <span class="stat-number" data-target="14">0</span><span class="stat-suffix">+</span>
+            </div>
+            <span class="stat-label">Projects Baked</span>
+          </div>
+
+          <div class="stat-card glass-card">
+            <span class="stat-icon">🍬</span>
+            <div class="stat-number-wrap">
+              <span class="stat-number" data-target="18">0</span><span class="stat-suffix">+</span>
+            </div>
+            <span class="stat-label">Ingredients (Tech)</span>
+          </div>
+
+          <div class="stat-card glass-card">
+            <span class="stat-icon">☕</span>
+            <div class="stat-number-wrap">
+              <span class="stat-number" data-target="850">0</span><span class="stat-suffix">+</span>
+            </div>
+            <span class="stat-label">Cups of Coffee</span>
+          </div>
+
+          <div class="stat-card glass-card">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-number-wrap">
+              <span class="stat-number" data-target="99">0</span><span class="stat-suffix">.9%</span>
+            </div>
+            <span class="stat-label">Curiosity Uptime</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icing Drip Divider (About -> Skills) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C200,100 400,-20 600,80 C800,140 1000,10 1200,70 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== SKILLS SECTION ("The Ingredients") ==================== -->
+    <section id="skills" class="section skills-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">🍬 The Ingredients</span>
+          <h2 class="section-title">Flavors & Tech Stack</h2>
+          <p class="section-subtitle">Carefully measured tools and frameworks powering rock-solid backend services.</p>
+        </div>
+
+        <!-- Skill Ingredient Jars Grid -->
+        <div class="skills-grid" id="skills-grid">
+          <!-- Rendered dynamically from content object in main.js -->
+        </div>
+
+        <!-- Sweet Callout Note -->
+        <div class="skills-note glass-card">
+          <span class="note-icon">💡</span>
+          <p>
+            <strong>Chef's Secret:</strong> I believe in learning fundamentals over syntax. Whether it's memory models in Go, JVM garbage collection in Java, or Raft consensus in distributed clusters, core mechanics make software delicious.
+          </p>
+        </div>
+      </div>
+
+      <!-- Icing Drip Divider (Skills -> Projects) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C180,80 380,20 550,90 C720,130 920,0 1200,60 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== PROJECTS SECTION ("Signature Bakes") ==================== -->
+    <section id="projects" class="section projects-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">🎂 Signature Bakes</span>
+          <h2 class="section-title">Freshly Sliced Projects</h2>
+          <p class="section-subtitle">A collection of distributed systems, Kafka streaming pipelines, AI agents, and creative experiments.</p>
+        </div>
+
+        <!-- Filter Category Tabs -->
+        <div class="project-filters" id="project-filters" role="tablist">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
+            <span>All Bakes</span> <span class="filter-count" id="count-all">6</span>
+          </button>
+          <button class="filter-btn" data-filter="backend" role="tab" aria-selected="false">
+            <span>Backend & Systems</span> <span class="filter-count" id="count-backend">3</span>
+          </button>
+          <button class="filter-btn" data-filter="ai" role="tab" aria-selected="false">
+            <span>AI & Agents</span> <span class="filter-count" id="count-ai">2</span>
+          </button>
+          <button class="filter-btn" data-filter="creative" role="tab" aria-selected="false">
+            <span>Playful Software</span> <span class="filter-count" id="count-creative">1</span>
+          </button>
+        </div>
+
+        <!-- Projects Grid Container -->
+        <div class="projects-grid" id="projects-grid">
+          <!-- Rendered dynamically from content object in main.js -->
+        </div>
+
+        <!-- GitHub More Bakes CTA -->
+        <div class="projects-footer">
+          <p>Craving more recipes and open-source contributions?</p>
+          <a href="https://github.com/sanskarnannajkar" target="_blank" rel="noopener noreferrer" class="btn btn-outline magnetic-btn">
+            <i data-lucide="github" class="btn-icon"></i>
+            <span>Browse Full GitHub Pantry</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Icing Drip Divider (Projects -> Journey) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C220,110 420,-10 620,95 C820,140 1020,30 1200,80 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== JOURNEY SECTION ("Baking Timeline") ==================== -->
+    <section id="journey" class="section journey-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">⏳ Baking Timeline</span>
+          <h2 class="section-title">The Rising Dough</h2>
+          <p class="section-subtitle">Key milestones in education, engineering breakthroughs, and technical evolution.</p>
+        </div>
+
+        <!-- Vertical Timeline Container -->
+        <div class="timeline-container" id="timeline-container">
+          <div class="timeline-line" id="timeline-line"></div>
+          <div class="timeline-items" id="timeline-items">
+            <!-- Rendered dynamically from content object in main.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Icing Drip Divider (Journey -> Beyond) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C150,70 350,10 500,85 C700,130 900,10 1200,75 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== BEYOND CODE ("Side Dishes") ==================== -->
+    <section id="beyond" class="section beyond-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">🍒 Side Dishes</span>
+          <h2 class="section-title">Beyond the Code Kitchen</h2>
+          <p class="section-subtitle">The hobbies, curiosities, and sweet diversions that keep my creative mind fresh.</p>
+        </div>
+
+        <!-- Side Dishes Grid -->
+        <div class="side-dishes-grid" id="side-dishes-grid">
+          <!-- Rendered dynamically from content object in main.js -->
+        </div>
+      </div>
+
+      <!-- Icing Drip Divider (Beyond -> Contact) -->
+      <div class="icing-divider icing-divider-bottom" aria-hidden="true">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M0,0 C250,95 450,5 650,90 C850,150 1050,20 1200,80 L1200,120 L0,120 Z"></path>
+        </svg>
+      </div>
+    </section>
+
+
+    <!-- ==================== CONTACT SECTION ("Place an Order") ==================== -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <!-- Section Header -->
+        <div class="section-header">
+          <span class="section-tag">💌 Place an Order</span>
+          <h2 class="section-title">Let's Bake Something Sweet</h2>
+          <p class="section-subtitle">Interested in collaborating, hiring for backend/DevOps roles, or just chatting tech over a cup of chai?</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Left: Bakery Receipt Order Ticket -->
+          <div class="order-ticket-wrap">
+            <div class="order-ticket" id="order-ticket" data-tilt data-tilt-max="4">
+              <!-- Ticket Zigzag Top -->
+              <div class="ticket-zigzag ticket-zigzag-top" aria-hidden="true"></div>
+
+              <div class="ticket-content">
+                <div class="ticket-header">
+                  <div class="ticket-logo">🧁 SWEET STACK BAKERY</div>
+                  <div class="ticket-meta">
+                    <span>ORDER TICKET #2026-SN</span>
+                    <span id="ticket-current-date">OCTOBER 2026</span>
+                  </div>
+                  <div class="ticket-divider-dash"></div>
+                </div>
+
+                <!-- Interactive Bakery Order Form -->
+                <form id="bakery-order-form" class="order-form">
+                  <div class="form-group">
+                    <label for="order-name">Customer Name / Company <span class="required">*</span></label>
+                    <input type="text" id="order-name" name="name" placeholder="E.g. Sarah from Stripe" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="order-email">Return Email <span class="required">*</span></label>
+                    <input type="email" id="order-email" name="email" placeholder="sarah@example.com" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="order-flavor">Select Your Project Flavor</label>
+                    <div class="custom-select-wrap">
+                      <select id="order-flavor" name="flavor">
+                        <option value="Backend Engineering">⚡ Scalable Backend Architecture (Java/Go)</option>
+                        <option value="Kafka & Event Systems">📨 Event Streams & Kafka Integration</option>
+                        <option value="DevOps & Cloud">☁️ Docker & Kubernetes Infrastructure</option>
+                        <option value="AI Agents & LLM">🤖 Autonomous AI Agents & Workflows</option>
+                        <option value="Internship / Full-time Opportunity">💼 Internship / Hiring Opportunity</option>
+                        <option value="General Tech Chat">☕ Casual Tech Chat & Coffee</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="order-notes">Order Notes / Recipe Details <span class="required">*</span></label>
+                    <textarea id="order-notes" name="message" rows="4" placeholder="Describe the project, role, timeline, or just say hello!" required></textarea>
+                  </div>
+
+                  <div class="ticket-summary">
+                    <div class="ticket-line">
+                      <span>Total Engineering Effort</span>
+                      <span>100% Passion</span>
+                    </div>
+                    <div class="ticket-line">
+                      <span>Response Delivery Time</span>
+                      <span>&lt; 24 Hours</span>
+                    </div>
+                  </div>
+
+                  <div class="ticket-divider-dash"></div>
+
+                  <button type="submit" class="btn btn-primary btn-ticket magnetic-btn" id="ticket-submit-btn">
+                    <span>Send Bakery Ticket</span>
+                    <span class="btn-icon">🚀</span>
+                  </button>
+                </form>
+
+                <div class="ticket-barcode" aria-hidden="true">
+                  <div class="barcode-lines"></div>
+                  <span class="barcode-number">* SANSKAR-NANNAJKAR-DEV *</span>
+                </div>
+              </div>
+
+              <!-- Ticket Zigzag Bottom -->
+              <div class="ticket-zigzag ticket-zigzag-bottom" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <!-- Right: Direct Connect & Contact Details Card -->
+          <div class="contact-details-card glass-card">
+            <h3 class="contact-card-title">Direct Kitchen Line</h3>
+            <p class="contact-card-desc">
+              Whether you have an ambitious backend challenge or want to discuss the latest developments in AI and distributed systems, my inbox is always open.
+            </p>
+
+            <div class="contact-info-list">
+              <a href="mailto:sanskarnannajkar@gmail.com" class="contact-info-item">
+                <div class="info-icon-box">
+                  <i data-lucide="mail"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">Direct Email</span>
+                  <span class="info-value">sanskarnannajkar@gmail.com</span>
+                </div>
+              </a>
+
+              <a href="https://linkedin.com/in/sanskar-nannajkar" target="_blank" rel="noopener noreferrer" class="contact-info-item">
+                <div class="info-icon-box">
+                  <i data-lucide="linkedin"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">LinkedIn Profile</span>
+                  <span class="info-value">linkedin.com/in/sanskar-nannajkar</span>
+                </div>
+              </a>
+
+              <a href="https://github.com/sanskarnannajkar" target="_blank" rel="noopener noreferrer" class="contact-info-item">
+                <div class="info-icon-box">
+                  <i data-lucide="github"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">GitHub Kitchen</span>
+                  <span class="info-value">github.com/sanskarnannajkar</span>
+                </div>
+              </a>
+
+              <div class="contact-info-item">
+                <div class="info-icon-box">
+                  <i data-lucide="map-pin"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">Current Bakery Base</span>
+                  <span class="info-value">Pune, Maharashtra, India 🇮🇳 (UTC+5:30)</span>
+                </div>
+              </div>
+
+              <div class="contact-info-item">
+                <div class="info-icon-box status-active">
+                  <i data-lucide="sparkles"></i>
+                </div>
+                <div class="info-content">
+                  <span class="info-label">Current Status</span>
+                  <span class="info-value status-text">Open for Backend Roles & Internships</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sweet Quote Banner -->
+            <div class="contact-sweet-banner">
+              <span class="banner-donut">🍩</span>
+              <p>"Great code is baked with passion, tested with patience, and served with pride."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="footer-emoji">🧁</span>
+          <span class="footer-name">Sanskar Nannajkar</span>
+        </div>
+        <p class="footer-tagline">Crafting distributed backend architectures and sweet digital experiences.</p>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          Baked with ❤️ and too much caffeine by <strong>Sanskar Nannajkar</strong>.
+        </p>
+        <p class="footer-sub">
+          Built with HTML, CSS, Vanilla JS, Three.js & GSAP. No heavy frameworks harmed.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Cherry Back-to-Top Button -->
+  <button id="back-to-top" class="back-to-top-btn" aria-label="Back to top" title="Back to top">
+    <span class="cherry-stem"></span>
+    <span class="cherry-body">🍒</span>
+    <span class="cherry-tooltip">Top!</span>
+  </button>
+
+  <!-- Easter Egg Donut Toast Notification -->
+  <div id="easter-egg-toast" class="easter-egg-toast" role="alert" aria-live="assertive">
+    <div class="toast-icon">🍩✨</div>
+    <div class="toast-body">
+      <strong>Donut worry, be happy!</strong>
+      <p>You unlocked the master baker secret achievement! Enjoy your sprinkles!</p>
+    </div>
+    <button class="toast-close" id="toast-close" aria-label="Close notification">✕</button>
+  </div>
+
+  <!-- Main ES Module Script (imports scene.js) -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
